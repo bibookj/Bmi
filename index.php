@@ -17,15 +17,16 @@ require_once('pacjenci.php');
     <form method="post" action="order.php">
     <select>
 <?php
-       $pacjenci = pobierzPacjentow();
-       foreach($pacjenci as $pacjent){?>
-        <option value="<?php echo $pacjent->getId(); ?>">
-        <?php echo $pacjent->getImieNazwisko(); ?>
-        </option> <?php
-       } 
-
-         
-        
+        /*$pacjenci = pobierzPacjentow();
+        foreach($pacjenci as $pacjent){?>
+          <option value="<?php echo $pacjent->getId(); ?>">
+          <?php echo $pacjent->getImieNazwisko(); ?>
+          </option> <?php
+        }  */
+        $pacjenci = pobierzPacjentow();    
+        foreach ($pacjenci as $pacjent) { //Nie udaje mi się wyświetlić więcej niż 1 pacjenta w select
+            echo"<option value=\"".$pacjent->getId()."\">".$pacjent->getImie()." ".$pacjent->getNazwisko()."</option>";
+        }
 ?>
         </select>
         <p>Podaj wagę w kg</p>
