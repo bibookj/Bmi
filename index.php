@@ -1,4 +1,5 @@
 <?php 
+session_start();
 require_once('pacjenci.php');
 
 ?>
@@ -14,20 +15,17 @@ require_once('pacjenci.php');
 </head>
 <body>
     <h1>Bmi kalkulator</h1>
-    <form method="post" action="order.php">
-    <select>
+    <form method="post" action="dodajwizyte.php">
+    <select name="pacjenci">
 <?php
-       $pacjenci = pobierzPacjentow();
-       foreach($pacjenci as $pacjent){?>
-        <option value="<?php echo $pacjent->getId(); ?>">
-        <?php echo $pacjent->getImieNazwisko(); ?>
-        </option> <?php
-       } 
-
-         
         
+        $pacjenci = pobierzPacjentow();    
+        foreach ($pacjenci as $pacjent) { 
+          echo"<option value=\"".$pacjent->getId()."\">".$pacjent->getImie()." ".$pacjent->getNazwisko()."</option>";
+        }
 ?>
         </select>
+        <a href="dodajpacjenta.php">Dodaj Pacjenta</a>
         <p>Podaj wagę w kg</p>
         <input type="number" name="waga" />
         <br/>

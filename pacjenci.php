@@ -1,4 +1,8 @@
 <?php
+
+require_once("connect.php");
+
+
 class Pacjent{
     var $imie;
     var $nazwisko;
@@ -14,7 +18,7 @@ class Pacjent{
         return $this->nazwisko;
     }
     function getImieNazwisko(){
-        return ""+$this->imie + " " + $this->nazwisko;
+        return "".$this->imie." ".$this->nazwisko;
     }
 
     function __construct( $id, $imie, $nazwisko ) {
@@ -25,10 +29,31 @@ class Pacjent{
 }
 
 
-function pobierzPacjentow(){
-    $pacjenci = array(new Pacjent(1,"Michał","Baran"));
-    return $pacjenci;
-}
 
+function pobierzPacjentow(){
+$pacjenci = array();
+// Create connection
+
+$conn = new mysqli($GLOBALS['servername'],$GLOBALS['username'],$GLOBALS['password'],$GLOBALS['dbname']);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+$sql = "SELECT * FROM pacjenci";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        $pacjenci[] = new Pacjent($row["id"],$row["imie"],$row["nazwisko"]);
+    }
+    
+} else {
+    echo "0 results";
+}
+$conn->close();
+return $pacjenci;
+}
 
 ?>
